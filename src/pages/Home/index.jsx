@@ -1,24 +1,22 @@
-import "./styles.css";
-import { useCallback, useEffect, useState } from "react";
+import './styles.css';
+import { useCallback, useEffect, useState } from 'react';
 
-import { Post } from "../../components/Post";
-import { loadPosts } from "../../utils/loadPosts";
-import { Button } from "../../components/Button";
-import { TextInput } from "../../components/TextInput";
+import { Post } from '../../components/Post';
+import { loadPosts } from '../../utils/loadPosts';
+import { Button } from '../../components/Button';
+import { TextInput } from '../../components/TextInput';
 
 export const Home = () => {
   const [posts, setPosts] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
   const [page, setPage] = useState(0);
   const [postsPerPage] = useState(10);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
 
   const noMorePosts = page + postsPerPage >= allPosts.length;
 
-  const filteredPosts = !!searchValue
-    ? allPosts.filter((post) =>
-        post.title.toLowerCase().includes(searchValue.toLowerCase())
-      )
+  const filteredPosts = searchValue
+    ? allPosts.filter((post) => post.title.toLowerCase().includes(searchValue.toLowerCase()))
     : posts;
 
   const handleLoadPosts = useCallback(async (page, postsPerPage) => {
@@ -49,10 +47,7 @@ export const Home = () => {
     <section className="main-container">
       <div className="search-container">
         {!!searchValue && <h1>Search value: {searchValue}</h1>}
-        <TextInput
-          searchValue={searchValue}
-          handleChange={handleChange}
-        />
+        <TextInput searchValue={searchValue} handleChange={handleChange} />
       </div>
 
       {filteredPosts.length > 0 && <Post posts={filteredPosts} />}
@@ -60,10 +55,7 @@ export const Home = () => {
 
       <div className="btn-container">
         {!searchValue && (
-          <Button
-            onClick={loadMorePosts}
-            disabled={noMorePosts}
-          >
+          <Button onClick={loadMorePosts} disabled={noMorePosts}>
             Load more posts...
           </Button>
         )}
